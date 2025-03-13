@@ -1,3 +1,11 @@
+/*
+ * cat.h
+ * Get file content
+ * cat.h is the part of TSH
+ *
+ * Written by Michael Ł. (Micha1207) in GNU Emacs
+ * Last update on: 13.03.2025
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -5,21 +13,23 @@
 #include <unistd.h>
 
 // Include commands
-#include "ls.h"
-#include "cd.h"
-#include "cat.h"
-#include "echo.h"
-#include "pwd.h"
+#include "cmds/ls.h"
+#include "cmds/cd.h"
+#include "cmds/cat.h"
+#include "cmds/echo.h"
+#include "cmds/pwd.h"
+#include "cmds/rm.h"
 
 void help(){
   printf("TSH usage: \n");
-  printf("  ls   - LiSt files in current directory. \n");
-  printf("  cd   - Change Directioy. \n");
-  printf("  cat  - Read and display file content (conCATinate). \n");
-  printf("  pwd  - Print Working Directory. \n");
-  printf("  echo - Echo what is after the command (e.g. echo Hello => Hello. Supports only one word now [it'll change]) \n");
-  printf("  help - print this. \n");
-  printf("  exit - exit TSH. \n");
+  printf("  ls ------------- LiSt files in current directory. \n");
+  printf("  cd <dir> ------- Change Directioy. \n");
+  printf("  rm <file/dir> -- ReMoves files or directories. \n");
+  printf("  cat <file> ----- Read and display file content (conCATinate). \n");
+  printf("  pwd  ----------- Print Working Directory. \n");
+  printf("  echo <what?> --- Echo what is after the command (e.g. echo Hello => Hello. Supports only one word now [it'll change]) \n");
+  printf("  help ----------- print this. \n");
+  printf("  exit ----------- exit TSH. \n");
 
 }
 
@@ -28,6 +38,7 @@ int main() {
   char *arg[10];
   
   printf("Welcome in Tree SHell!\n");
+  printf("To see all available commands type: `help'.\n");
   
   while (1) {
     printf("$ ");
@@ -57,6 +68,12 @@ int main() {
         cat(arg[1]);
       } else {
         printf("cat: Missing file argument\n");
+      }
+    }  else if (strcmp(arg[0], "rm") == 0) {
+      if (arg[1]) { 
+        rm(arg[1]);
+      } else {
+        printf("rm: Missing file argument\n");
       }
     } else if (strcmp(arg[0], "pwd") == 0){
 	pwd();
