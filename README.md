@@ -5,3 +5,4 @@ Use `help` to see all available commands.
 
 ### How to use?
 You need to compile `main.c` file. 
+`main.c` includes files from `cmds/` directory; there are main comands.
