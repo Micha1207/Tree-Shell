@@ -5,12 +5,15 @@
  *
  * Written by Michael Ł. (Micha1207) in GNU Emacs
  * Last edit on 15.03.2025
- */
+*/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <libgen.h>
 #include <unistd.h>
+
+// Include colors
+#include "cmds/text-colors.h" // This IS NOT A COMMAND
 
 // Include commands
 #include "cmds/ls.h"
@@ -22,6 +25,8 @@
 #include "cmds/mkdir.h"
 #include "cmds/help.h"
 #include "cmds/whoami.h"
+#include "cmds/grep.h"
+#include "cmds/cls.h"
 
 int main() {
   char cmd[100];
@@ -31,7 +36,7 @@ int main() {
   printf("To see all available commands type: `help'.\n");
   
   while (1) {
-    printf("$ ");
+    printf("%s$ %s", cyan, reset);
     fgets(cmd, sizeof(cmd), stdin);
 
     cmd[strcspn(cmd, "\n")] = 0;
@@ -46,47 +51,45 @@ int main() {
 
     if (strcmp(arg[0], "ls") == 0) {
       ls();
+    } else if (strcmp(arg[0], "cls") == 0) {
+      cls();
+    } else if (strcmp(arg[0], "pwd") == 0){
+	pwd();
     } else if (strcmp(arg[0], "cd") == 0) {
       if (arg[1]) { 
         cd(arg[1]);
 	pwd();
-      } else {
-        printf("cd: Missing argument\n");
-      }
+      } 
     } else if (strcmp(arg[0], "cat") == 0) {
       if (arg[1]) { 
         cat(arg[1]);
-      } else {
-        printf("cat: Missing file argument\n");
-      }
+      } 
     }  else if (strcmp(arg[0], "rm") == 0) {
       if (arg[1]) { 
         rm(arg[1]);
-      } else {
-        printf("rm: Missing file argument\n");
       }
-    } else if (strcmp(arg[0], "pwd") == 0){
-	pwd();
     }  else if (strcmp(arg[0], "mkdir") == 0) {
       if (arg[1]) { 
         mkdirc(arg[1]);
-      } else {
-        printf("mkdir: Missing dir name.\n");
       }
     } else if (strcmp(arg[0], "whoami") == 0) {
       whoami();
     } else if (strcmp(arg[0], "echo") == 0) {
       if (arg[1]) { 
         echo(arg[1]);
-      } else {
-        printf("echo: Missing text argument\n");
-      }
+      } 
+    } else if (strcmp(arg[0], "grep") == 0) {
+      if (arg[1]) {
+	if (arg[2]){
+	  grep(arg[1], arg[2]);
+	}
+      } 
     } else if (strcmp(arg[0], "help") == 0) {
       help();
     } else if (strcmp(arg[0], "exit") == 0) {
       break; 
     } else {
-      printf("%s: No such file or directory. \n", arg[0]);
+      printf("%s%s: No such file or directory.%s\n", red, arg[0], reset);
     }
   }
 
