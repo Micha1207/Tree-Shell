@@ -17,7 +17,11 @@ void help(){
   printf("  rm <file/dir> ------- ReMoves files or directories. \n");
   printf("  cat <file> ---------- Read and display file content (conCATinate). \n");
   printf("  pwd  ---------------- Print Working Directory. \n");
-  printf("  echo <what?> -------- Echo what is after the command (e.g. echo Hello => Hello. Supports only one word) \n");
+  printf("  new <file> ---------- Make new empty file. \n");
+  printf("  cls ----------------- Clear terminal. \n");
+  printf("  grep <what?> <file> - Search in file.\n");
+  printf("  echo <what?> -------- Echo what is after the command. \n");
+  printf("  clock <flag> -------- Simple clock. Use '--std' to print standard time. Use '--unix' to see UNIX time. \n");
   printf("  whoami -------------- print username.\n");
   printf("  mkdir --------------- make directory. \n");
   printf("  help ---------------- print this. \n");

@@ -4,7 +4,7 @@
  * ls.h is part of Tree Coreutils
  *
  * Written by Michael Ł. (Micha1207) in GNU Emacs.
- * 12.03.2025
+ * 21.03.2025
 */
 #include <stdio.h>
 #include <unistd.h>
@@ -16,16 +16,22 @@ void ls(){
   DIR *dir = opendir(".");
 
   if (dir == NULL) {
-    printf("%s%s: Cannot open local dir. This is critical.", red, dir);
+    printf("%s%s: Cannot open local dir. This is critical. Aliens will. You will be abducted by aliens.", red, dir);
     return;
   }
   
   while ((entry = readdir(dir)) != NULL) {
-    if (entry->d_name[0] == '.') {
-      continue;
+        if (entry->d_name[0] == '.') {
+            continue;
+        }
+        if (entry->d_type == DT_DIR) {
+	  printf("%s%s/%s\n", blue, entry->d_name, reset);
+        } else if (entry->d_type == DT_REG) {
+          printf("%s%s %s\n", green, entry->d_name, reset);
+        } else {
+	  printf("%s%s %s\n", yellow, entry->d_name, reset);
+        }
     }
-    printf("%s\n", entry->d_name);
-  }
 
   closedir(dir);
 }
